@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-color_dict = dict({'CON HOLD':'b',
+colour_dict = dict({'CON HOLD':'b',
                   'CON GAIN':'aqua',
                   'LAB HOLD': 'red',
                   'LAB GAIN': 'violet',
@@ -30,7 +30,10 @@ age_end = 50
 # first get required age range
 df_age_group = df_age.query(str(age_start) + " <= Age_year <= " + str(age_end)).groupby("PCON11CD")[["Age_percent"]].sum()
 
-# join EU data with elction headlines
+# filter on party if required. Comment out to show all parties. If filtering, adjust legend order list accordingly
+#df_con_head.query('wp =="CON" or wp =="LAB"', inplace = True)
+
+# join EU data with election headlines
 df_eu_hd = df_con_eu.join(df_con_head.set_index(['ons']), on=['ons_code'], how='inner')
 
 # join the result with age data
@@ -47,7 +50,7 @@ decimals = 4
 df_age_eu['leave_to_use'] = df_age_eu['leave_to_use'].apply(lambda x: round(x, decimals))
 df_age_eu['Age_percent'] = df_age_eu['Age_percent'].apply(lambda x: round(x, decimals))
  
-sns.lmplot(y="leave_to_use", x="Age_percent", data=df_age_eu, hue="headline", height=8.27, aspect=11.7/8.27, fit_reg=False, palette=color_dict, legend=False)
+sns.lmplot(y="leave_to_use", x="Age_percent", data=df_age_eu, hue="headline", height=8.27, aspect=11.7/8.27, fit_reg=False, palette=colour_dict, legend=False)
 
 plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()]) 
 plt.gca().set_yticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_yticks()]) 
@@ -60,8 +63,12 @@ plt.title("2019 General Election: leave vote against population aged " + age_ran
 
 handles, labels = plt.gca().get_legend_handles_labels()
 
-# order legend using the default positions
+# order legend using the default positions - comment out if filtering on party
 order = [0,1,2,6,3,7,4,13,14,15,8,11,9,10,12,5]
+
+# uncomment for CON and LAB only filter
+#order = [0,1,2,3]
+
 plt.legend([handles[idx] for idx in order],[labels[idx] for idx in order])
 
 plt.tight_layout()
