@@ -3,6 +3,8 @@
 Creates scatter graph from raw csv files. Constituencies are represented by dots, coloured according to party (hold and gain). The positions of the dots correspond to the leave vote in the 2016 EU referendum for the constituency (x axis), and the percentage of the constituency population in the selected age range. The age range can be changed using the variables age_start and age_end.
 
 The graph shows how constituencies with an older population and higher leave vote were more likely to vote Conservative and vice versa for Labour (see png).
+#### plot_ge_age_eu_con_lab_csv.py
+Same as above but filters for Conservative and Labour parties only.
 
 #### Requirements
 * matplotlib
