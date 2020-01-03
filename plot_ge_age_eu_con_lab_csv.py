@@ -31,7 +31,7 @@ age_end = 50
 df_age_group = df_age.query(str(age_start) + " <= Age_year <= " + str(age_end)).groupby("PCON11CD")[["Age_percent"]].sum()
 
 # filter on party if required. Comment out to show all parties. If filtering, adjust legend order list accordingly
-#df_con_head.query('wp =="CON" or wp =="LAB"', inplace = True)
+df_con_head.query('wp =="CON" or wp =="LAB"', inplace = True)
 
 # join EU data with election headlines
 df_eu_hd = df_con_eu.join(df_con_head.set_index(['ons']), on=['ons_code'], how='inner')
@@ -64,10 +64,10 @@ plt.title("2019 General Election: leave vote against population aged " + age_ran
 handles, labels = plt.gca().get_legend_handles_labels()
 
 # order legend using the default positions - comment out if filtering on party
-order = [0,1,2,6,3,7,4,13,14,15,8,11,9,10,12,5]
+#order = [0,1,2,6,3,7,4,13,14,15,8,11,9,10,12,5]
 
 # uncomment for CON and LAB only filter
-#order = [0,1,2,3]
+order = [0,1,2,3]
 
 plt.legend([handles[idx] for idx in order],[labels[idx] for idx in order])
 
